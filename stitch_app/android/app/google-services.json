@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "260804900959",
+    "project_id": "tailer-9018a",
+    "storage_bucket": "tailer-9018a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260804900959:android:6bd60282305efd57c183ea",
+        "android_client_info": {
+          "package_name": "com.hkdarkdev.stitch_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-NGg9vZxiikscCNA-3KOag1KaXeDXscc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
