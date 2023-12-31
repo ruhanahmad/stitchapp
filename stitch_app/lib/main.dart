@@ -25,9 +25,9 @@ await Firebase.initializeApp(
     ChangeNotifierProvider(create: (_) {
       return ProductProvider();
     }),
-    ChangeNotifierProvider(create: (_) {
-      return CartProvider();
-    })
+    // ChangeNotifierProvider(create: (_) {
+    //   return CartProvider();
+    // })
   ], child: const MyApp()));
 
   

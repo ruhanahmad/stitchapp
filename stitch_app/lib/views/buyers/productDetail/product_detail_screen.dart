@@ -28,7 +28,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   String? _selectedSize;
   @override
   Widget build(BuildContext context) {
-    final CartProvider _cartProvider = Provider.of<CartProvider>(context);
+    // final CartProvider _cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -213,80 +213,80 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ],
         ),
       ),
-      bottomSheet: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: InkWell(
-          onTap: _cartProvider.getCartItem
-                  .containsKey(widget.productData['productId'])
-              ? null
-              : () {
-                  if (_selectedSize == null) {
-                    return showSnack(context, 'Please Select A Size');
-                  } else {
-                    _cartProvider.addProductToCart(
-                        widget.productData['productName'],
-                        widget.productData['productId'],
-                        widget.productData['imageUrl'],
-                        1,
-                        widget.productData['quantity'],
-                        widget.productData['productPrice'],
-                        widget.productData['vendorId'],
-                        _selectedSize!,
-                        widget.productData['scheduleDate']);
+      // bottomSheet: Padding(
+      //   padding: const EdgeInsets.all(8.0),
+      //   child: InkWell(
+      //     onTap: _cartProvider.getCartItem
+      //             .containsKey(widget.productData['productId'])
+      //         ? null
+      //         : () {
+      //             if (_selectedSize == null) {
+      //               return showSnack(context, 'Please Select A Size');
+      //             } else {
+      //               _cartProvider.addProductToCart(
+      //                   widget.productData['productName'],
+      //                   widget.productData['productId'],
+      //                   widget.productData['imageUrl'],
+      //                   1,
+      //                   widget.productData['quantity'],
+      //                   widget.productData['productPrice'],
+      //                   widget.productData['vendorId'],
+      //                   _selectedSize!,
+      //                   widget.productData['scheduleDate']);
 
-                    return showSnack(context,
-                        'You Added ${widget.productData['productName']} To Your Cart');
-                  }
-                },
-          child: Container(
-            height: 50,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: _cartProvider.getCartItem
-                      .containsKey(widget.productData['productId'])
-                  ? Colors.grey
-                  : Colors.blue.shade900,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(
-                    CupertinoIcons.cart,
-                    color: Colors.white,
-                    size: 25,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _cartProvider.getCartItem
-                          .containsKey(widget.productData['productId'])
-                      ? Text(
-                          'IN CART',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            letterSpacing: 5,
-                          ),
-                        )
-                      : Text(
-                          'ADD TO CART',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            letterSpacing: 5,
-                          ),
-                        ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+      //               return showSnack(context,
+      //                   'You Added ${widget.productData['productName']} To Your Cart');
+      //             }
+      //           },
+      //     child: Container(
+      //       height: 50,
+      //       width: MediaQuery.of(context).size.width,
+      //       decoration: BoxDecoration(
+      //         color: _cartProvider.getCartItem
+      //                 .containsKey(widget.productData['productId'])
+      //             ? Colors.grey
+      //             : Colors.blue.shade900,
+      //         borderRadius: BorderRadius.circular(10),
+      //       ),
+      //       child: Row(
+      //         mainAxisAlignment: MainAxisAlignment.center,
+      //         children: [
+      //           Padding(
+      //             padding: const EdgeInsets.all(10.0),
+      //             child: Icon(
+      //               CupertinoIcons.cart,
+      //               color: Colors.white,
+      //               size: 25,
+      //             ),
+      //           ),
+      //           Padding(
+      //             padding: const EdgeInsets.all(8.0),
+      //             child: _cartProvider.getCartItem
+      //                     .containsKey(widget.productData['productId'])
+      //                 ? Text(
+      //                     'IN CART',
+      //                     style: TextStyle(
+      //                       color: Colors.white,
+      //                       fontWeight: FontWeight.bold,
+      //                       fontSize: 18,
+      //                       letterSpacing: 5,
+      //                     ),
+      //                   )
+      //                 : Text(
+      //                     'ADD TO CART',
+      //                     style: TextStyle(
+      //                       color: Colors.white,
+      //                       fontWeight: FontWeight.bold,
+      //                       fontSize: 18,
+      //                       letterSpacing: 5,
+      //                     ),
+      //                   ),
+      //           )
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

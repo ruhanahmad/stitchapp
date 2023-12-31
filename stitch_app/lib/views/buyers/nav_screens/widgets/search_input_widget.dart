@@ -8,7 +8,8 @@ class SearchInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return 
+    Padding(
       padding: const EdgeInsets.all(14.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),

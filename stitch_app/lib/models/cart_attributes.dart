@@ -40,3 +40,46 @@ class CartAttr with ChangeNotifier {
     quantity--;
   }
 }
+
+class Product {
+  final String id;
+  final String title;
+  final String description;
+  final String price;
+  final String image;
+   int quantity;
+
+  Product({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.image,
+    required this.quantity,
+  });
+
+  // Factory method to create a Product instance from JSON
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      price: json['price'] as String,
+      image: json['image'] as String,
+      quantity: json['quantity'] as int
+    );
+  }
+
+  // Method to convert a Product instance to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'price': price,
+      'image': image,
+      "quantity":quantity
+    };
+  }
+}
+

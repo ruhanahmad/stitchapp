@@ -8,6 +8,8 @@ import 'package:stitch_app/views/buyers/nav_screens/store_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/cart_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/search_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/account_screen.dart';
+import 'package:stitch_app/views/buyers/nav_screens/widgets/cartScreenTwo.dart';
+import 'package:stitch_app/views/buyers/nav_screens/widgets/category_text.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -21,9 +23,9 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> _pages = [
     HomeScreen(),
-    CategoryScreen(),
+    CategoryText(),
     StoreScreen(),
-    CartScreen(),
+   CartScreenTwo(),
     SearchScreen(),
     AccountScreen(),
   ];

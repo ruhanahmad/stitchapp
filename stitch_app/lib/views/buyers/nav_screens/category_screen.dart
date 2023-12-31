@@ -8,7 +8,7 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> _productStream =
-        FirebaseFirestore.instance.collection('categories').snapshots();
+        FirebaseFirestore.instance.collection('cat').snapshots();
     return Scaffold(
       appBar: AppBar(
         elevation: 1,

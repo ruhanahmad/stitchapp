@@ -10,9 +10,9 @@ class HomeproductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> _productsStream = FirebaseFirestore.instance
-        .collection('products')
+        .collection('services')
         .where('category', isEqualTo: categoryName)
-        .where('approved', isEqualTo: true)
+        // .where('approved', isEqualTo: true)
         .snapshots();
     return StreamBuilder<QuerySnapshot>(
       stream: _productsStream,
@@ -31,61 +31,65 @@ class HomeproductWidget extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 final productData = snapshot.data!.docs[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return ProductDetailScreen(
-                        productData: productData,
-                      );
-                    }));
-                  },
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            Container(
-                              height: 170,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    productData['imageUrl'][0],
-                                  ),
-                                  fit: BoxFit.cover,
+                return Card(
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            height: 130,
+                            width: 200,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  productData['image'][0],
                                 ),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            productData['productName'],
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 4,
-                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          productData['name'],
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 4,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            '\$' +
-                                " " +
-                                productData['productPrice'].toStringAsFixed(2),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 4,
-                              color: Colors.blue.shade900,
-                            ),
+                      ),
+                       Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                         
+                              productData['time'] + "hour",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 4,
+                            color: Colors.blue.shade900,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '\$' +
+                              " " +
+                              productData['price'],
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 4,
+                            color: Colors.blue.shade900,
+                          ),
+                        ),
+                      ),
+                      
+                    ],
                   ),
                 );
               },

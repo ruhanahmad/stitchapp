@@ -10,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:stitch_app/controllers/auth_controller.dart';
 import 'package:stitch_app/utils/show_snackBar.dart';
 import 'package:stitch_app/views/buyers/auth/login_screen.dart';
-import  "package:fluttertoast/fluttertoast.dart";
 
 class AddCartScreen extends StatefulWidget {
   @override

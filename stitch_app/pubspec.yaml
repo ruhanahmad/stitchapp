@@ -50,7 +50,7 @@ dependencies:
   flutter_slidable: ^3.0.1
   country_state_city_picker: ^1.2.8
   firebase_app_check:
-  fluttertoast: ^8.2.4
+  # fluttertoast: ^8.2.4
   get: ^4.6.6
 
 

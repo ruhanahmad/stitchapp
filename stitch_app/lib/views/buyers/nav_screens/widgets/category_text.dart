@@ -15,7 +15,7 @@ class _CategoryTextState extends State<CategoryText> {
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> _catgoryStream =
-        FirebaseFirestore.instance.collection('categories').snapshots();
+        FirebaseFirestore.instance.collection('cat').snapshots();
     return Padding(
       padding: const EdgeInsets.all(9.0),
       child: Column(
@@ -43,7 +43,7 @@ class _CategoryTextState extends State<CategoryText> {
               }
 
               return Container(
-                height: 40,
+                height: 60,
                 child: Row(
                   children: [
                     Expanded(
@@ -59,14 +59,14 @@ class _CategoryTextState extends State<CategoryText> {
                                 onPressed: () {
                                   setState(() {
                                     _selectedCategory =
-                                        categoryData['categoryName'];
+                                        categoryData['name'];
                                   });
 
                                   print(_selectedCategory);
                                 },
                                 label: Center(
                                   child: Text(
-                                    categoryData['categoryName'],
+                                    categoryData['name'],
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
@@ -92,7 +92,7 @@ class _CategoryTextState extends State<CategoryText> {
               );
             },
           ),
-          if (_selectedCategory == null) MainProductsWidget(),
+          // if (_selectedCategory == null) MainProductsWidget(),
           if (_selectedCategory != null)
             HomeproductWidget(categoryName: _selectedCategory!),
         ],

@@ -10,7 +10,8 @@ class ServicesGrid extends StatelessWidget {
    
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+    return
+     StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance.collection('services').where("userId",isEqualTo:_auth.currentUser!.uid ).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -28,7 +29,8 @@ class ServicesGrid extends StatelessWidget {
         List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
             snapshot.data!.docs;
 
-        return Column(
+        return
+         Column(
           children: [
             Padding(
             padding: const EdgeInsets.all(8.0),
