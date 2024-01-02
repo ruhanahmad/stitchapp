@@ -20,6 +20,7 @@ class _EditPRofileScreenState extends State<EditPRofileScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _phoneController = TextEditingController();
+  String? image;
   String? address;
   @override
   void initState() {
@@ -27,6 +28,7 @@ class _EditPRofileScreenState extends State<EditPRofileScreen> {
       _fullNameController.text = widget.userData['fullName'];
       _emailController.text = widget.userData['email'];
       _phoneController.text = widget.userData['phoneNumber'];
+  image = widget.userData["profileImage"];
     });
     super.initState();
   }
@@ -61,14 +63,15 @@ class _EditPRofileScreenState extends State<EditPRofileScreen> {
                     CircleAvatar(
                       radius: 60,
                       backgroundColor: Colors.blue.shade900,
+                        backgroundImage: NetworkImage(  widget.userData["profileImage"] == null   ? "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" : widget.userData["profileImage"]),
                     ),
-                    Positioned(
-                      right: 0,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(CupertinoIcons.photo),
-                      ),
-                    ),
+                    // Positioned(
+                    //   right: 40,
+                    //   child: IconButton(
+                    //     onPressed: () {},
+                    //     icon: Icon(CupertinoIcons.photo),
+                    //   ),
+                    // ),
                   ],
                 ),
                 Padding(
@@ -80,15 +83,15 @@ class _EditPRofileScreenState extends State<EditPRofileScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Enter Email',
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: TextFormField(
+                //     controller: _emailController,
+                //     decoration: InputDecoration(
+                //       labelText: 'Enter Email',
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
@@ -98,17 +101,17 @@ class _EditPRofileScreenState extends State<EditPRofileScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    onChanged: (value) {
-                      address = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter Address',
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: TextFormField(
+                //     onChanged: (value) {
+                //       address = value;
+                //     },
+                //     decoration: InputDecoration(
+                //       labelText: 'Enter Address',
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

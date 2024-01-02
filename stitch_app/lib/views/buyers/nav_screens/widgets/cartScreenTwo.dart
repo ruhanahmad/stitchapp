@@ -154,7 +154,7 @@ UserController usersss = Get.put(UserController());
                   ),
                 ),
                 Obx(() {
-            return Text('Total Price: \$${calculateTotalPrice().toStringAsFixed(2)}');
+            return Text('Total Price: \$${calculateTotalPrice()}');
           }),
      ],
    )

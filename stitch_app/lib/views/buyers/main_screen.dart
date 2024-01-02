@@ -24,9 +24,9 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _pages = [
     HomeScreen(),
     CategoryText(),
-    StoreScreen(),
+    // StoreScreen(),
    CartScreenTwo(),
-    SearchScreen(),
+    // SearchScreen(),
     AccountScreen(),
   ];
   @override
@@ -54,21 +54,21 @@ class _MainScreenState extends State<MainScreen> {
             ),
             label: 'CATEGORIES',
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/shop.svg',
-              width: 20,
-            ),
-            label: 'STORE',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: SvgPicture.asset(
+          //     'assets/icons/shop.svg',
+          //     width: 20,
+          //   ),
+          //   label: 'STORE',
+          // ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset('assets/icons/cart.svg'),
             label: 'CART',
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/search.svg'),
-            label: 'SEARCH',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: SvgPicture.asset('assets/icons/search.svg'),
+          //   label: 'SEARCH',
+          // ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset('assets/icons/account.svg'),
             label: 'ACCOUNT',

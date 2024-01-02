@@ -39,7 +39,8 @@ class WelcomeText extends StatelessWidget {
             ),
              Positioned(
               bottom: 8,
-              child: Container(
+              child: 
+              Container(
                 height: 17,
                 width: 17,
                 decoration: BoxDecoration(

@@ -5,6 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:stitch_app/controllers/auth_controller.dart';
 import 'package:stitch_app/utils/show_snackBar.dart';
 import 'package:stitch_app/views/buyers/auth/login_screen.dart';
+import 'package:stitch_app/views/buyers/main_screen.dart';
+
+import '../nav_screens/sellerScreen.dart';
 
 class BuyerRegisterScreen extends StatefulWidget {
   @override
@@ -32,7 +35,7 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
     setState(() {
       _isLoading = true;
     });
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() && _image !=null) {
       await _authController
           .signUpUSers(email, fullName, phoneNumber, password, _image,selectedRole)
           .whenComplete(() {
@@ -40,10 +43,20 @@ class _BuyerRegisterScreenState extends State<BuyerRegisterScreen> {
           _formKey.currentState!.reset();
           _isLoading = false;
         });
-      });
 
+          selectedRole == "seller" ?   Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return SellerScreen();
+                            })) :Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return MainScreen();
+                            })); 
+      });
+   
       return showSnack(
           context, 'Congratulations Account has been Created For You');
+
+          
     } else {
       setState(() {
         _isLoading = false;

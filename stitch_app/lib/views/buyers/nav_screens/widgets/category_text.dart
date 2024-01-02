@@ -92,7 +92,8 @@ class _CategoryTextState extends State<CategoryText> {
               );
             },
           ),
-          // if (_selectedCategory == null) MainProductsWidget(),
+          if (_selectedCategory == null) 
+         Text("No Service Available"),
           if (_selectedCategory != null)
             HomeproductWidget(categoryName: _selectedCategory!),
         ],

@@ -17,7 +17,7 @@ class CustomerOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> _ordersStream = FirebaseFirestore.instance
         .collection('orders')
-        .where('buyerId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .snapshots();
 
     return Scaffold(

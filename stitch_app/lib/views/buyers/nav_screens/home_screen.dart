@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:stitch_app/models/cart_attributes.dart';
 import 'package:stitch_app/vendor/controllers/userController.dart';
 import 'package:stitch_app/views/buyers/nav_screens/homeScreenSeller.dart';
+import 'package:stitch_app/views/buyers/nav_screens/widgets/appconst.dart';
 
 import 'package:stitch_app/views/buyers/nav_screens/widgets/banner_widget.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/category_text.dart';
@@ -43,133 +44,138 @@ class _HomeScreenState extends State<HomeScreen> {
             .contains(searchQuery.toLowerCase()))
         .toList();
   }
+       UserController userController = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        WelcomeText(),
-        SizedBox(
-          height: 14,
-        ),
-            Padding(
-      padding: const EdgeInsets.all(14.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: TextField(
-          decoration: InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
-              hintText: 'Search For Products',
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-              ),
-               suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
-                      onPressed: () {
-                        _searchController.clear();
-                        setState(() {});
-                      },
-                    ),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: SvgPicture.asset(
-                  'assets/icons/search.svg',
-                  width: 10,
-                ),
-              )),
+    return Scaffold(
+     appBar: aps("Home"),
 
-               onChanged: (value) {
-                    // Trigger the StreamBuilder to rebuild with the updated search query
-                    setState(() {});
-                  },
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+       //   WelcomeText(),
+          SizedBox(
+            height: 14,
+          ),
+              Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: TextField(
+            decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                hintText: 'Search For Products',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+                 suffixIcon: IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() {});
+                        },
+                      ),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: SvgPicture.asset(
+                    'assets/icons/search.svg',
+                    width: 10,
+                  ),
+                )),
+      
+                 onChanged: (value) {
+                      // Trigger the StreamBuilder to rebuild with the updated search query
+                      setState(() {});
+                    },
+          ),
         ),
       ),
-    ),
-     StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: 
-      _searchController.text.isEmpty ?
-      
-      FirebaseFirestore.instance.collection('products').snapshots() :
-                       FirebaseFirestore.instance
-                          .collection('products')
-                          .where('name',
-                              isGreaterThanOrEqualTo: _searchController.text)
-                          // .orderBy("user", descending: false)
-                          // .orderBy("InitialTime", descending: true)
-                          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(
-            child: Text('Error: ${snapshot.error}'),
-          );
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
-            snapshot.data!.docs;
-
-        return
+       StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: 
+        _searchController.text.isEmpty ?
         
-         Expanded(
-           child: Column(
-            children: [
-            //   Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text(
-            //     'Services',
-            //     style: TextStyle(
-            //       fontSize: 24.0,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ),
-            // ),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
+        FirebaseFirestore.instance.collection('products').snapshots() :
+                         FirebaseFirestore.instance
+                            .collection('products')
+                            .where('name',
+                                isGreaterThanOrEqualTo: _searchController.text)
+                            // .orderBy("user", descending: false)
+                            // .orderBy("InitialTime", descending: true)
+                            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          }
+      
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+      
+          List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
+              snapshot.data!.docs;
+      
+          return
+          
+           Expanded(
+             child: Column(
+              children: [
+              //   Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Text(
+              //     'Services',
+              //     style: TextStyle(
+              //       fontSize: 24.0,
+              //       fontWeight: FontWeight.bold,
+              //     ),
+              //   ),
+              // ),
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8.0,
+                      mainAxisSpacing: 8.0,
+                    ),
+                    itemCount: documents.length,
+                    itemBuilder: (context, index) {
+                      var data = documents[index].data();
+      
+                      
+                      return 
+                      
+                      
+                      
+                      ServiceCards(
+                        imageUrl: data['image'],
+                        price: data['price'],
+                        title: data['name'],
+                        // hour: data['time'],
+                        description: data['description'],
+                        id:documents[index].id,
+                        i:index,
+                       
+                      );
+                      
+                       
+                       
+                    },
                   ),
-                  itemCount: documents.length,
-                  itemBuilder: (context, index) {
-                    var data = documents[index].data();
-
-                    
-                    return 
-                    
-                    
-                    
-                    ServiceCards(
-                      imageUrl: data['image'],
-                      price: data['price'],
-                      title: data['name'],
-                      // hour: data['time'],
-                      description: data['description'],
-                      id:documents[index].id,
-                      i:index,
-                     
-                    );
-                    
-                     
-                     
-                  },
                 ),
-              ),
-            ],
-                   ),
-         );
-      },
-    )
-        // SearchInputWidget(),
-        // BannerWidget(),
-      // CategoryText(),
-      ],
+              ],
+                     ),
+           );
+        },
+      )
+          // SearchInputWidget(),
+          // BannerWidget(),
+        // CategoryText(),
+        ],
+      ),
     );
   }
 }
@@ -232,13 +238,20 @@ class ServiceCards extends StatelessWidget {
                 Text('Title: $title'),
                 // Text('Hour: $hour'),
                 Text('Description: $description'),
+SizedBox(height: 1,),
                   GestureDetector(
                     onTap: () {
                       //  userController.playersList.removeAt(i);
                       userController.playersList.add(Product(id: id, title: title, description: description, price: price, image: imageUrl,quantity: 1));
                       userController.update();
                     },
-                    child: Text('Add to Cart')),
+                    child: Container(
+                       height: 30,
+                  width: 140,
+                  decoration: BoxDecoration(
+                    color: Colors.black
+                  ),
+                      child: Center(child: Text('Add to Cart',style: TextStyle(color: Colors.white),)))),
               ],
             ),
           ),
