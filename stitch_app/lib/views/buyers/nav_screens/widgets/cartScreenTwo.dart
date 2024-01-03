@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stitch_app/vendor/controllers/userController.dart';
+import 'package:stitch_app/views/buyers/nav_screens/widgets/appconst.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/checkout.dart';
 
 import '../../../../models/cart_attributes.dart';
@@ -40,9 +41,11 @@ UserController usersss = Get.put(UserController());
     //   home: 
     GetBuilder<UserController>(builder: (builder){
       return   Scaffold(
-        appBar: AppBar(
-          title: Text('Product List'),
-        ),
+        appBar: 
+        aps("Cart "),
+        // AppBar(
+        //   title: Text('Product List'),
+        // ),
         body: Column(
           children: [
             Expanded(

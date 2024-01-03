@@ -95,7 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
         stream: 
         _searchController.text.isEmpty ?
         
-        FirebaseFirestore.instance.collection('products').snapshots() :
+        FirebaseFirestore.instance.collection('products').snapshots()
+         :
                          FirebaseFirestore.instance
                             .collection('products')
                             .where('name',

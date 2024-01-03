@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:stitch_app/vendor/controllers/userController.dart';
 
 UserController userController = Get.put(UserController());
-AppBar aps(String name) {
-  return
-  
-      AppBar(
+ aps(String name) {
+ 
+  GetBuilder<UserController>(builder: (_){
+ return  AppBar(
         title: Text(name,style: TextStyle(color: Colors.white),),
         automaticallyImplyLeading: false,
      elevation: 2,
@@ -82,5 +82,7 @@ AppBar aps(String name) {
     )
               ],
       );
+  });
+      
 }
 
