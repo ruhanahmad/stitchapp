@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:stitch_app/vendor/controllers/userController.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/appconst.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/checkout.dart';
+import 'package:stitch_app/views/buyers/nav_screens/widgets/welcome_text_widget.dart';
 
 import '../../../../models/cart_attributes.dart';
 
@@ -41,13 +42,58 @@ UserController usersss = Get.put(UserController());
     //   home: 
     GetBuilder<UserController>(builder: (builder){
       return   Scaffold(
-        appBar: 
-        aps("Cart "),
+        // appBar: 
+    //    AppBar(
+    //     title: Text("Cart Screen",style: TextStyle(color: Colors.white),),
+    //     automaticallyImplyLeading: false,
+    //  elevation: 2,
+    //           backgroundColor: Colors.blue.shade900,
+    //           actions: [
+
+
+
+
+    //           Stack(
+    //   children: [
+    //     IconButton(
+    //       icon: Icon(Icons.shopping_cart,color: Colors.white,),
+    //       onPressed: () {
+    //         // Handle cart button press
+    //       },
+    //     ),
+    //     Positioned(
+    //       right: 8,
+    //       top: 8,
+    //       child: Container(
+    //         padding: EdgeInsets.all(2),
+    //         decoration: BoxDecoration(
+    //           color: Colors.red,
+    //           borderRadius: BorderRadius.circular(10),
+    //         ),
+    //         constraints: BoxConstraints(
+    //           minWidth: 16,
+    //           minHeight: 16,
+    //         ),
+    //         child: Text(
+    //          "${userController.playersList.length}",
+    //           style: TextStyle(
+    //             color: Colors.white,
+    //             fontSize: 12,
+    //           ),
+    //           textAlign: TextAlign.center,
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // )
+    //           ],
+    //   ),
         // AppBar(
         //   title: Text('Product List'),
         // ),
         body: Column(
           children: [
+             WelcomeText(name:"Cart"),
             Expanded(
               child: ListView.builder(
                 itemCount: builder.playersList.length,
@@ -157,7 +203,7 @@ UserController usersss = Get.put(UserController());
                   ),
                 ),
                 Obx(() {
-            return Text('Total Price: \$${calculateTotalPrice()}');
+          return  Text('Total Price: \$${calculateTotalPrice()}');
           }),
      ],
    )

@@ -6,6 +6,7 @@ import 'package:stitch_app/views/buyers/auth/login_screen.dart';
 import 'package:stitch_app/views/buyers/inner_screens/order_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/appconst.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/firstScreen.dart';
+import 'package:stitch_app/views/buyers/nav_screens/widgets/welcome_text_widget.dart';
 
 import '../inner_screens/edit_profile.dart';
 
@@ -18,8 +19,9 @@ class AccountScreen extends StatelessWidget {
     return
      _auth.currentUser == null
         ? Scaffold(
-            appBar: 
-            aps("Profile"),
+          
+            // appBar: 
+            // aps("Profile"),
             // AppBar(
             //   elevation: 2,
             //   backgroundColor: Colors.blue.shade900,
@@ -37,6 +39,7 @@ class AccountScreen extends StatelessWidget {
             // ),
             body: Column(
               children: [
+                 WelcomeText(name:"Profile"),
                 SizedBox(
                   height: 25,
                 ),
@@ -113,8 +116,52 @@ class AccountScreen extends StatelessWidget {
                 Map<String, dynamic> data =
                     snapshot.data!.data() as Map<String, dynamic>;
                 return Scaffold(
-                  appBar:
-                    aps("Profile"), 
+    //               appBar:
+    //                  AppBar(
+    //     title: Text("Profile",style: TextStyle(color: Colors.white),),
+    //     automaticallyImplyLeading: false,
+    //  elevation: 2,
+    //           backgroundColor: Colors.blue.shade900,
+    //           actions: [
+
+
+
+
+    //           Stack(
+    //   children: [
+    //     IconButton(
+    //       icon: Icon(Icons.shopping_cart,color: Colors.white,),
+    //       onPressed: () {
+    //         // Handle cart button press
+    //       },
+    //     ),
+    //     Positioned(
+    //       right: 8,
+    //       top: 8,
+    //       child: Container(
+    //         padding: EdgeInsets.all(2),
+    //         decoration: BoxDecoration(
+    //           color: Colors.red,
+    //           borderRadius: BorderRadius.circular(10),
+    //         ),
+    //         constraints: BoxConstraints(
+    //           minWidth: 16,
+    //           minHeight: 16,
+    //         ),
+    //         child: Text(
+    //          "${userController.playersList.length}",
+    //           style: TextStyle(
+    //             color: Colors.white,
+    //             fontSize: 12,
+    //           ),
+    //           textAlign: TextAlign.center,
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // )
+    //           ],
+    //   ),
                   // AppBar(
                   //   elevation: 2,
                   //   backgroundColor: Colors.blue.shade900,
@@ -132,6 +179,7 @@ class AccountScreen extends StatelessWidget {
                   // ),
                   body: Column(
                     children: [
+                     WelcomeText(name:"Profile"),
                       SizedBox(
                         height: 25,
                       ),

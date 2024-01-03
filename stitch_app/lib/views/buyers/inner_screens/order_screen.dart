@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
+import 'package:stitch_app/views/buyers/inner_screens/orderDetails.dart';
 
 class CustomerOrderScreen extends StatelessWidget {
   String formatedDate(date) {
@@ -15,11 +16,6 @@ class CustomerOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _ordersStream = FirebaseFirestore.instance
-        .collection('orders')
-        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .snapshots();
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue.shade900,
@@ -35,130 +31,66 @@ class CustomerOrderScreen extends StatelessWidget {
           ),
         ),
         body: StreamBuilder<QuerySnapshot>(
-          stream: _ordersStream,
+          stream: FirebaseFirestore.instance
+              .collection("orders")
+              .where("userId",
+                  isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+              .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
               return Text('Something went wrong');
-            }
-
-            if (snapshot.connectionState == ConnectionState.waiting) {
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(color: Colors.blue.shade900),
               );
-            }
-
-            return ListView(
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                return Column(
-                  children: [
-                    ListTile(
-                      leading: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 14,
-                          child: document['accepted'] == true
-                              ? Icon(Icons.delivery_dining)
-                              : Icon(Icons.access_time)),
-                      title: document['accepted'] == true
-                          ? Text(
-                              'Accepted',
-                              style: TextStyle(color: Colors.blue.shade900),
-                            )
-                          : Text(
-                              'Not Accepted',
+            } else {
+              return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var data = snapshot.data!.docs[index];
+                    return Card(
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OrderDetails(
+                                        address: data['address'],
+                                        username: data['name'],
+                                        phone: data['phoneNumber'],
+                                        totalamout: data['total'],
+                                        docId: data.id,
+                                      )));
+                        },
+                        leading: CircleAvatar(
+                            backgroundColor: Colors.blue,
+                            child: Text(
+                              data['name'].toString()[0],
                               style: TextStyle(
-                                color: Colors.red,
-                              ),
-                            ),
-                      trailing: Text(
-                        'Amount' +
-                            ' ' +
-                            document['productPrice'].toStringAsFixed(2),
-                        style: TextStyle(fontSize: 17, color: Colors.blue),
-                      ),
-                      subtitle: Text(
-                        formatedDate(
-                          document['orderDate'].toDate(),
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                        title: Text(
+                          "Total Amount: " + data['total'] + "\$",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                         ),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                        subtitle: Text(
+                          "Address: " + data['address'],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal),
                         ),
+                        trailing: Icon(Icons.arrow_forward),
                       ),
-                    ),
-                    ExpansionTile(
-                      title: Text(
-                        'Order Details',
-                        style: TextStyle(
-                          color: Colors.blue.shade900,
-                          fontSize: 15,
-                        ),
-                      ),
-                      subtitle: Text('View Order Details'),
-                      children: [
-                        ListTile(
-                          leading: CircleAvatar(
-                            child: Image.network(
-                              document['productImage'][0],
-                            ),
-                          ),
-                          title: Text(document['productName']),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    ('Quantity'),
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    document['quantity'].toString(),
-                                  ),
-                                ],
-                              ),
-                              document['accepted'] == true
-                                  ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text('Schedule Delivery Date'),
-                                        Text(formatedDate(
-                                            document['scheduleDate'].toDate()))
-                                      ],
-                                    )
-                                  : Text(''),
-                              ListTile(
-                                title: Text(
-                                  'Buyer Details',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                subtitle: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(document['fullName']),
-                                    Text(document['email']),
-                                    Text(document['address']),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                );
-              }).toList(),
-            );
+                    );
+                  });
+            }
           },
         ));
   }
