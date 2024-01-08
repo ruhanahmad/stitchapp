@@ -132,8 +132,10 @@ class _EditPRofileScreenState extends State<EditPRofileScreen> {
               'address': address,
             }).whenComplete(() {
               EasyLoading.dismiss();
-
-              Navigator.pop(context);
+setState(() {
+  
+});
+               Navigator.pop(context);
             });
           },
           child: Container(

@@ -24,14 +24,14 @@ class FirstScreen extends StatelessWidget {
               backgroundColor: Colors.blue.shade900,
               title: Text(
                 'Profile',
-                style: TextStyle(letterSpacing: 4),
+                style: TextStyle(letterSpacing: 4,color: Colors.white),
               ),
               centerTitle: true,
               actions: [
-                Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Icon(Icons.star),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(14.0),
+                //   child: Icon(Icons.star),
+                // ),
               ],
             ),
             body: Column(

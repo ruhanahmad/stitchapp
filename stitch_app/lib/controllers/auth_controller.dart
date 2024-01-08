@@ -60,7 +60,9 @@ class AuthController {
           'buyerId': cred.user!.uid,
           'address': '',
           'profileImage': profileImageUrl,
-          "role":selectedRole
+          "role":selectedRole,
+         // "password":password
+
         });
 
         res = 'success';

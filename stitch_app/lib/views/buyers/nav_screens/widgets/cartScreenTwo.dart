@@ -94,6 +94,12 @@ UserController usersss = Get.put(UserController());
         body: Column(
           children: [
              WelcomeText(name:"Cart"),
+
+              builder.playersList.length == 0 ?
+            Padding(
+              padding: const EdgeInsets.only(top:50.0),
+              child: Container(child: Center(child: Text("Your Cart is Empty",style: TextStyle(fontSize: 30),)),),
+            ) :
             Expanded(
               child: ListView.builder(
                 itemCount: builder.playersList.length,
@@ -102,7 +108,9 @@ UserController usersss = Get.put(UserController());
                   // Product product = products[index];
               
                   // Return a Container with Row for each product
-                  return Container(
+                  return 
+                  
+                  Container(
                     padding: EdgeInsets.all(8.0),
                     child: Row(
                       children: [
@@ -176,7 +184,7 @@ UserController usersss = Get.put(UserController());
 //       .reduce((value, element) => value + element)),
             // Text(builder.playersList.fold( 0, (sum, product) => sum + product.price * product.quantity))
             builder.playersList.length == 0 ?
-            Container()
+            Container(child: Center(child: Text("")),)
         //  Container(
         //           color: Colors.red,
         //           height: 60,

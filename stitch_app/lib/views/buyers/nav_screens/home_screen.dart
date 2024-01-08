@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             .contains(searchQuery.toLowerCase()))
         .toList();
   }
-
+ TextEditingController searchTextss = TextEditingController();
   UserController userController = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: TextField(
+                controller: searchTextss,
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -119,8 +120,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     suffixIcon: IconButton(
                       icon: Icon(Icons.clear),
                       onPressed: () {
-                        searchingText = null;
-                        setState(() {});
+                        setState(() {
+                            searchTextss.clear();
+                             searchingText = null;
+                        });
+                      
+                        // setState(() {});
                       },
                     ),
                     prefixIcon: Padding(
@@ -184,16 +189,81 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
                             var data = snapshot.data!.docs[index];
-
-                            return ServiceCards(
-                              imageUrl: data['image'],
-                              price: data['price'],
-                              title: data['name'],
+                var   imageUrl= data['image'];
+                           var   price= data['price'];
+                           var   title= data['name'];
                               // hour: data['time'],
-                              description: data['description'],
-                              id: snapshot.data!.docs[index].id,
-                              i: index,
-                            );
+                           var   description= data['description'];
+                           var   id= snapshot.data!.docs[index].id;
+                           var   i= index;
+                            return
+
+                              Card(
+      elevation: 5.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 100.0,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(imageUrl),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Price: $price',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text('Title: $title'),
+                // Text('Hour: $hour'),
+                Text('Description: $description'),
+                SizedBox(
+                  height: 9,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      //  userController.playersList.removeAt(i);
+                      userController.playersList.add(Product(
+                          id: id,
+                          title: title,
+                          description: description,
+                          price: price,
+                          image: imageUrl,
+                          quantity: 1));
+                      userController.update();
+                    },
+                    child: Container(
+                        height: 30,
+                        width: 140,
+                        decoration: BoxDecoration(color: Colors.black),
+                        child: Center(
+                            child: Text(
+                          'Add to Cart',
+                          style: TextStyle(color: Colors.white),
+                        )))),
+              ],
+            ),
+          ),
+       
+        ],
+      ),
+    );
+                            //  ServiceCards(
+                            //   imageUrl: data['image'],
+                            //   price: data['price'],
+                            //   title: data['name'],
+                            //   // hour: data['time'],
+                            //   description: data['description'],
+                            //   id: snapshot.data!.docs[index].id,
+                            //   i: index,
+                            // );
                           },
                         ),
                       ),
@@ -238,7 +308,8 @@ class ServiceCards extends StatelessWidget {
   UserController userController = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return
+     Card(
       elevation: 5.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,35 +362,7 @@ class ServiceCards extends StatelessWidget {
               ],
             ),
           ),
-          // Row(
-          //                         mainAxisSize: MainAxisSize.min,
-          //                         children: [
-          //                           IconButton(
-          //                             icon: Icon(Icons.edit),
-          //                             onPressed: () {
-          //                               _showEditDialog(context, id, price,
-          //                                   title, hour, description);
-          //                             },
-          //                           ),
-          //                           IconButton(
-          //                             icon: Icon(Icons.delete),
-          //                             onPressed: () async {
-          //                               try {
-          //                                 await FirebaseFirestore.instance
-          //                                     .collection("services")
-          //                                     .doc(id)
-          //                                     .delete();
-          //                               } catch (e) {
-          //                                 print(
-          //                                     'Error deleting document: $e');
-          //                               }
-          //                               // Call your Firebase delete function or use a service class
-          //                               // to handle the deletion of the task
-          //                               // Example: FirebaseService.deleteTask(task.id);
-          //                             },
-          //                           ),
-          //                         ],
-          //                       ),
+       
         ],
       ),
     );

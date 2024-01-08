@@ -10,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:stitch_app/controllers/auth_controller.dart';
 import 'package:stitch_app/utils/show_snackBar.dart';
 import 'package:stitch_app/views/buyers/auth/login_screen.dart';
+import 'package:stitch_app/views/buyers/nav_screens/sellerScreen.dart';
+import 'package:stitch_app/views/buyers/nav_screens/widgets/welsom.dart';
 
 class AddCartScreen extends StatefulWidget {
   @override
@@ -32,45 +34,54 @@ class _AddCartScreenState extends State<AddCartScreen> {
   bool _isLoading = false;
 
   Uint8List? _image;
- final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-    addServices(email, fullName, phoneNumber, price, _image,selectedRole) async{
-      EasyLoading.show(status: "Running");
- String profileImageUrl = await _uploadProfileImageToStorage(_image);
 
-   if (selectedService.isNotEmpty &&
+   addServices(email, fullName, phoneNumber, price, _image, selectedRole) async {
+ 
+
+    if (selectedService.isNotEmpty &&
         email.isNotEmpty &&
         fullName.isNotEmpty &&
         phoneNumber.isNotEmpty &&
-        price.isNotEmpty 
-        
-        ) {
+        price.isNotEmpty) {
+             EasyLoading.show(status: "Running");
+    String profileImageUrl = await _uploadProfileImageToStorage(_image);
       await _firestore.collection('services').add({
         'category': selectedService,
         'name': email,
         'description': fullName,
         'time': phoneNumber,
         'price': price,
-        "image":profileImageUrl,
-        "userId":_auth.currentUser!.uid
+        "image": profileImageUrl,
+        "userId": _auth.currentUser!.uid
       });
 
-     // Clear text field controllers after saving
-      email.clear();
-      fullName.clear();
-      phoneNumber.clear();
-      price.clear();
+      // Clear text field controllers after saving
+      // email.clear();
+      // fullName.clear();
+      // phoneNumber.clear();
+      // price.clear();
 
       // You can add further logic or navigation after saving
       EasyLoading.dismiss();
       print('Service saved successfully!');
+      showToast(context, "Service saved successfully!");
+      Navigator.of(context).push(MaterialPageRoute(builder: (builder)=>SellerScreen()));
     } else {
-       EasyLoading.dismiss();
-      print('Please fill in all fields');
+      EasyLoading.dismiss();
+      // Scaffold.of(context).
+      showToast(context, "Please fill all feilds");
     }
+  }
+void showToast(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 2),
+    );
 
-}
-
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
   _uploadProfileImageToStorage(Uint8List? image) async {
     Reference ref =
         _storage.ref().child('servicePics').child(_auth.currentUser!.uid);
@@ -122,20 +133,17 @@ class _AddCartScreenState extends State<AddCartScreen> {
       _image = im;
     });
   }
-String selectedRole = 'customer'; // Default value
+
+  String selectedRole = 'customer'; // Default value
   late List<String> serviceList;
-final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-@override
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  @override
   void initState() {
     super.initState();
-    _servicesStream = _firestore
-        .collection('cat')
-        .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => doc['name'] as String)
-            .toList());
+    _servicesStream = _firestore.collection('cat').snapshots().map((snapshot) =>
+        snapshot.docs.map((doc) => doc['name'] as String).toList());
   }
-  
+
   Future<void> fetchServices() async {
     final QuerySnapshot<Map<String, dynamic>> snapshot =
         await _firestore.collection('cat').get();
@@ -144,250 +152,279 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
       serviceList = snapshot.docs.map((doc) => doc.id).toList();
     });
   }
+
   late Stream<List<String>> _servicesStream;
   String selectedService = '';
 
- 
   // _signUpUser() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Add Service',
-                  style: TextStyle(fontSize: 20),
-                ),
-                Stack(
-                  children: [
-                    _image != null
-                        ? 
-                        Container(
-  width: 128,
-  height: 128,
-  decoration: BoxDecoration(
-    // shape: BoxShape.circle,
-    color: Colors.blue.shade900,
-    image: DecorationImage(
-      fit: BoxFit.cover,
-      image: 
-      MemoryImage(_image!),
-    ),
-  ),
-)
-                        // CircleAvatar(
-                        //     radius: 64,
-                        //     backgroundColor: Colors.blue.shade900,
-                        //     backgroundImage: MemoryImage(_image!),
-                        //   )
-                        : 
-                       Container(
-  width: 208,
-  height: 208,
-  decoration: BoxDecoration(
-    // shape: BoxShape.circle,
-    color: Colors.blue.shade900,
-    image: DecorationImage(
-      fit: BoxFit.cover,
-      image: NetworkImage(
-          'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
-    ),
-  ),
-),
-                    Positioned(
-                      right: 0,
-                      top: 5,
-                      child: IconButton(
-                        onPressed: () {
-                          selectGalleryImage();
-                        },
-                        icon: Icon(
-                          CupertinoIcons.photo,
-                        ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+               Welsome(name:"Add Service"),
+              SizedBox(height: 20,),
+              Stack(
+                children: [
+                  _image != null
+                      ?
+                      
+                      CircleAvatar(
+                        radius: 65,
+                        backgroundImage:MemoryImage(_image!) ,
+                      )
+
+                      //  Container(
+                      //     width: 128,
+                      //     height: 128,
+                      //     decoration: BoxDecoration(
+                      //       // shape: BoxShape.circle,
+                      //       color: Colors.blue.shade900,
+                      //       image: DecorationImage(
+                      //         fit: BoxFit.cover,
+                      //         image: MemoryImage(_image!),
+                      //       ),
+                      //     ),
+                      //   )
+                      // CircleAvatar(
+                      //     radius: 64,
+                      //     backgroundColor: Colors.blue.shade900,
+                      //     backgroundImage: MemoryImage(_image!),
+                      //   )
+                      : 
+                      
+                       CircleAvatar(
+                        radius: 65,
+                        backgroundImage:NetworkImage(
+                                   'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
+                      ),
+                      // Container(
+                      //     width: 208,
+                      //     height: 208,
+                      //     decoration: BoxDecoration(
+                      //       // shape: BoxShape.circle,
+                      //       color: Colors.blue.shade900,
+                      //       image: DecorationImage(
+                      //         fit: BoxFit.cover,
+                      //         image: NetworkImage(
+                      //             'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
+                      //       ),
+                      //     ),
+                      //   ),
+                  Positioned(
+                    right: 0,
+                    top: 5,
+                    child: IconButton(
+                      onPressed: () {
+                        selectGalleryImage();
+                      },
+                      icon: Icon(
+                        CupertinoIcons.photo,
                       ),
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(13.0),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please name must not be empty';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onChanged: (value) {
-                      email = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter Name',
-                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(13.0),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please Description must not be empty';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onChanged: (value) {
-                      fullName = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter Description',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(13.0),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please hour must not be empty';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onChanged: (value) {
-                      phoneNumber = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter hour',
-                    ),
-                  ),
-                ),
-                   Padding(
-                  padding: const EdgeInsets.all(13.0),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please price must not be empty';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onChanged: (value) {
-                      price = value;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter Price',
-                    ),
-                  ),
-                ),
-             ElevatedButton(
-              onPressed: () {
-                showBottomSheet(context);
-              },
-              child: Text('Select a service'),
-            ),
-                // Padding(
-                //   padding: const EdgeInsets.all(13.0),
-                //   child: TextFormField(
-                //     obscureText: true,
-                //     validator: (value) {
-                //       if (value!.isEmpty) {
-                //         return 'Please Password must not be empty';
-                //       } else {
-                //         return null;
-                //       }
-                //     },
-                //     onChanged: (value) {
-                //       password = value;
-                //     },
-                //     decoration: InputDecoration(
-                //       labelText: 'Password',
-                //     ),
-                //   ),
-                // ),
-                   Text("${selectedService}"),
-        
-                GestureDetector(
-                  onTap: ()async {
-                     List<DocumentSnapshot> documents = [];
-  List cardEx = [];
-
-  String? typeofUser;
-
-
-    documents.clear();
-    final QuerySnapshot result = await FirebaseFirestore.instance
-        .collection('services')
-        .where('category', isEqualTo: selectedService)
-        .where('userId', isEqualTo: _auth.currentUser!.uid)
-     
-        .get();
-    documents = result.docs;
-  
-    print(documents.length);
-    if (documents.length > 0) {
-    // EasyLoading.showError(,duration: Duration(days:1));
-    // Fluttertoast.showToast(msg: "Service Already Adeed");
-    Get.snackbar("Error", "Service Already Added");
-                  }
-                  else {
-  addServices(email, fullName, phoneNumber, price, _image,selectedService);
-                  }
-      // print(documents.first["inOut"]);
-     
-                
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please name must not be empty';
+                    } else {
+                      return null;
+                    }
                   },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width - 40,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade900,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                        child: _isLoading
-                            ? CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : Text(
-                                'Add Service',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 4,
-                                ),
-                              )),
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Enter Name',
                   ),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text('Already Have An Account?'),
-                //     TextButton(
-                //       onPressed: () {
-                //         Navigator.push(context,
-                //             MaterialPageRoute(builder: (context) {
-                //           return LoginScreen();
-                //         }));
-                //       },
-                //       child: Text('Login'),
-                //     ),
-                //   ],
-                // )
-              ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please Description must not be empty';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    fullName = value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Enter Description',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please hour must not be empty';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    phoneNumber = value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Enter hour',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please price must not be empty';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    price = value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Enter Price',
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  showBottomSheet(context);
+                },
+                child: Text('Select a Category'),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(13.0),
+              //   child: TextFormField(
+              //     obscureText: true,
+              //     validator: (value) {
+              //       if (value!.isEmpty) {
+              //         return 'Please Password must not be empty';
+              //       } else {
+              //         return null;
+              //       }
+              //     },
+              //     onChanged: (value) {
+              //       password = value;
+              //     },
+              //     decoration: InputDecoration(
+              //       labelText: 'Password',
+              //     ),
+              //   ),
+              // ),
+              Text("${selectedService}"),
+      
+              GestureDetector(
+                onTap: () async {
+                  List<DocumentSnapshot> documents = [];
+                  List cardEx = [];
+      
+                  String? typeofUser;
+      
+                  documents.clear();
+                  final QuerySnapshot result = await FirebaseFirestore
+                      .instance
+                      .collection('services')
+                      .where('category', isEqualTo: selectedService)
+                      .where('userId', isEqualTo: _auth.currentUser!.uid)
+                      .get();
+                  documents = result.docs;
+      
+                  print(documents.length);
+                  if (documents.length > 0) {
+                    // EasyLoading.showError(,duration: Duration(days:1));
+                    // Fluttertoast.showToast(msg: "Service Already Adeed");
+                   ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+      content: Text("Already! Service Added"),
+      duration: Duration(seconds: 2), // Optional duration
+      action: SnackBarAction(
+        label: 'Error',
+        onPressed: () {
+          // Perform some action when the user clicks on the action button
+        },
+      ),
             ),
+          );
+                  //  Get.snackbar("Error", "Service Already Added");
+                  } else {
+      
+            //                    await _firestore.collection('services').add({
+            //   'category': selectedService,
+            //   'name': email,
+            //   'description': fullName,
+            //   'time': phoneNumber,
+            //   'price': price,
+            //   // "image": profileImageUrl,
+            //   "userId": _auth.currentUser!.uid
+            // });
+            if (_formKey.currentState!.validate()){
+                    addServices(email, fullName, phoneNumber, price, _image,
+                        selectedService);
+                  }
+                  }
+                  print("documents.first[inOut]");
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 40,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade900,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              'Add Service',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 4,
+                              ),
+                            )),
+                ),
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Text('Already Have An Account?'),
+              //     TextButton(
+              //       onPressed: () {
+              //         Navigator.push(context,
+              //             MaterialPageRoute(builder: (context) {
+              //           return LoginScreen();
+              //         }));
+              //       },
+              //       child: Text('Login'),
+              //     ),
+              //   ],
+              // )
+            ],
           ),
         ),
       ),
     );
   }
-    void showBottomSheet(BuildContext context) {
+
+  void showBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -421,6 +458,4 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
       },
     );
   }
-
-  
 }

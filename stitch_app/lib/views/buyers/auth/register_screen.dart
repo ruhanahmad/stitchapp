@@ -93,7 +93,7 @@ String selectedRole = 'customer'; // Default value
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Create Customer"s Account',
+                  'Create Account',
                   style: TextStyle(fontSize: 20),
                 ),
                 Stack(
@@ -197,22 +197,29 @@ String selectedRole = 'customer'; // Default value
                     ),
                   ),
                 ),
-                    DropdownButton<String>(
-              value: selectedRole,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedRole = newValue!;
-                      print(selectedRole);
-                });
-              },
-              items: <String>['customer', 'seller']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal:15.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        child: DropdownButton<String>(
+                                      value: selectedRole,
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          selectedRole = newValue!;
+                          print(selectedRole);
+                                        });
+                                      },
+                                      items: <String>['customer', 'seller']
+                                          .map<DropdownMenuItem<String>>((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                    ),
+                      ),
+                    ),
         
                 GestureDetector(
                   onTap: () {

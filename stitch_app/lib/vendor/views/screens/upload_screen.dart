@@ -84,6 +84,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     'vendorId': FirebaseAuth.instance.currentUser!.uid,
                     'approved': false,
                   }).whenComplete(() {
+                   
                     _productProvider.clearData();
                     _formKey.currentState!.reset();
                     EasyLoading.dismiss();

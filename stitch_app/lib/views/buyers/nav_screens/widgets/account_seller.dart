@@ -3,15 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stitch_app/views/buyers/auth/login_screen.dart';
+import 'package:stitch_app/views/buyers/inner_screens/edit_profile.dart';
 import 'package:stitch_app/views/buyers/inner_screens/order_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/appconst.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/firstScreen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/welcome_text_widget.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/welsom.dart';
 
-import '../inner_screens/edit_profile.dart';
+// import '../inner_screens/edit_profile.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreenSeller extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -210,16 +211,16 @@ class AccountScreen extends StatelessWidget {
                       //   leading: Icon(Icons.shop),
                       //   title: Text('Cart'),
                       // ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return CustomerOrderScreen();
-                          }));
-                        },
-                        leading: Icon(CupertinoIcons.shopping_cart),
-                        title: Text('Order'),
-                      ),
+                      // ListTile(
+                      //   onTap: () {
+                      //     Navigator.push(context,
+                      //         MaterialPageRoute(builder: (context) {
+                      //       return CustomerOrderScreen();
+                      //     }));
+                      //   },
+                      //   leading: Icon(CupertinoIcons.shopping_cart),
+                      //   title: Text('Order'),
+                      // ),
                       ListTile(
                         onTap: () async {
                           await _auth.signOut().whenComplete(() {

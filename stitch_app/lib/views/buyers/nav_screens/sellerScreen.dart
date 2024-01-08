@@ -10,6 +10,7 @@ import 'package:stitch_app/views/buyers/nav_screens/store_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/cart_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/search_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/account_screen.dart';
+import 'package:stitch_app/views/buyers/nav_screens/widgets/account_seller.dart';
 
 class SellerScreen extends StatefulWidget {
   const SellerScreen({super.key});
@@ -24,10 +25,10 @@ class _SellerScreenState extends State<SellerScreen> {
   List<Widget> _pages = [
     ServicesGrid(),
     AddCartScreen(),
-    StoreScreen(),
+    //StoreScreen(),
     // CartScreen(),
     // SearchScreen(),
-    AccountScreen(),
+    AccountScreenSeller(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -52,15 +53,15 @@ class _SellerScreenState extends State<SellerScreen> {
               'assets/icons/explore.svg',
               width: 20,
             ),
-            label: 'CATEGORIES',
+            label: 'Add Service',
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/shop.svg',
-              width: 20,
-            ),
-            label: 'STORE',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: SvgPicture.asset(
+          //     'assets/icons/shop.svg',
+          //     width: 20,
+          //   ),
+          //   label: 'STORE',
+          // ),
           // BottomNavigationBarItem(
           //   icon: SvgPicture.asset('assets/icons/cart.svg'),
           //   label: 'CART',
