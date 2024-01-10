@@ -109,7 +109,7 @@ class _CategoryTextState extends State<CategoryText> {
                 ? FirebaseFirestore.instance.collection("cat").snapshots()
                 : FirebaseFirestore.instance
                     .collection("cat")
-                    .where("name", isGreaterThanOrEqualTo: searchingText)
+                    .where("name", isEqualTo: searchingText)
                     .snapshots(),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot> snapshot) {

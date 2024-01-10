@@ -148,7 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? FirebaseFirestore.instance.collection('products').snapshots()
                 : FirebaseFirestore.instance
                     .collection('products')
-                    .where("name", isGreaterThanOrEqualTo: searchingText)
+                    .where("name", isEqualTo: searchingText)
+                    // .where('productName', isLessThan: searchingText! + 'z')
                     .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) {

@@ -77,7 +77,7 @@ class _ServicesGridState extends State<ServicesGrid> {
                 : FirebaseFirestore.instance
                     .collection('services')
                     .where("userId", isEqualTo: _auth.currentUser!.uid)
-                    .where("name", isGreaterThanOrEqualTo: searchingText)
+                    .where("name", isEqualTo: searchingText)
                     .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {

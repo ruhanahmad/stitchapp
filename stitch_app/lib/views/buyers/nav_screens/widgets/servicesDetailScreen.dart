@@ -44,31 +44,36 @@ class _ServicesDetailScreenState extends State<ServicesDetailScreen> {
                   height: 300,
                   fit: BoxFit.cover,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          _showEditDialog(context, widget.id!, widget.price!,
-                              widget.name!, widget.time!, widget.description!);
-                        },
-                        icon: Icon(
-                          Icons.edit,
-                          color: Colors.black,
-                        )),
-                    IconButton(
-                        onPressed: () async {
-                          await FirebaseFirestore.instance
-                              .collection("services")
-                              .doc(widget.id)
-                              .delete()
-                              .then((value) => Navigator.pop(context));
-                        },
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        )),
-                  ],
+                Container(
+                  height: 60,
+                  color: Colors.white.withOpacity(0.6),
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            _showEditDialog(context, widget.id!, widget.price!,
+                                widget.name!, widget.time!, widget.description!);
+                          },
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.black,
+                          )),
+                      IconButton(
+                          onPressed: () async {
+                            await FirebaseFirestore.instance
+                                .collection("services")
+                                .doc(widget.id)
+                                .delete()
+                                .then((value) => Navigator.pop(context));
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          )),
+                    ],
+                  ),
                 )
               ],
             ),
