@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stitch_app/controllers/auth_controller.dart';
 import 'package:stitch_app/utils/show_snackBar.dart';
+import 'package:stitch_app/vendor/controllers/userController.dart';
 import 'package:stitch_app/views/buyers/auth/register_screen.dart';
 import 'package:stitch_app/views/buyers/main_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/sellerScreen.dart';
@@ -12,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+ UserController userController = Get.put(UserController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthController _authController = AuthController();
   late String email;
@@ -51,6 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
     
       // print(documents.first["inOut"]);
      var  nameOfUser = documents.first["role"];
+    userController.phoneNumber = documents.first["phoneNumber"];
+    userController.update();
   //   print(documents.first["userName"] + "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
   //    userController.inOut  = documents.first["inOut"];
   //  userController.total = documents.first["totalHours"];
@@ -90,6 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
       return showSnack(context, 'Please feidls most not be empty');
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {

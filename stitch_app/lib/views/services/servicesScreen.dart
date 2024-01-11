@@ -84,7 +84,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                   .bold
                                   .make(),
                               "Title: ${data['name']}".text.make(),
-                              "Description: ${data['description']}".text.make()
+                              "Description: ${data['description']}".text.make(),
+                               10.heightBox,
+                                 "Phone Number: ${data['phoneNumber']}".text.make(),
                             ],
                           )
                               .box

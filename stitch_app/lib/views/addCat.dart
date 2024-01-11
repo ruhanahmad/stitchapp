@@ -11,6 +11,7 @@ import 'package:stitch_app/controllers/auth_controller.dart';
 import 'package:stitch_app/utils/show_snackBar.dart';
 import 'package:stitch_app/views/buyers/auth/login_screen.dart';
 import 'package:stitch_app/views/buyers/nav_screens/sellerScreen.dart';
+import 'package:stitch_app/views/buyers/nav_screens/widgets/appconst.dart';
 import 'package:stitch_app/views/buyers/nav_screens/widgets/welsom.dart';
 
 class AddCartScreen extends StatefulWidget {
@@ -54,7 +55,8 @@ class _AddCartScreenState extends State<AddCartScreen> {
         'time': phoneNumber,
         'price': price,
         "image": profileImageUrl,
-        "userId": _auth.currentUser!.uid
+        "userId": _auth.currentUser!.uid,
+        "phoneNumber":userController.phoneNumber
       });
 
       // Clear text field controllers after saving

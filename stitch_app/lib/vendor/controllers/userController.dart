@@ -8,7 +8,7 @@ class UserController extends GetxController {
 
 List abc = [];
 
-
+var phoneNumber;
 var playersList = <Product>[].obs;
 double totalPrice = 0.0;
 }
